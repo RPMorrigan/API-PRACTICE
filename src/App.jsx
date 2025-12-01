@@ -63,7 +63,11 @@ function App() {
   };
   
   fetchData();
-}, []);
+  }, []);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  
     return (
       <div className="App">
         <div className="google-books wrapper">
@@ -78,10 +82,10 @@ function App() {
         </div>
         <div className="news wrapper">
           <h2>News</h2>
-          {theNews.map((news) => (
-            <div className="card" key={ news.index}>
-              <img src={news.urlToImage}/>
-              <h3>{ news.name }</h3>
+          {theNews.map((news, index) => (
+            <div className="card" key={index}>
+              <img src={news.urlToImage} alt={ news.title} />
+              <h3>{ news.title }</h3>
               <p>By: {news.author}</p>
           </div>
           ))}
@@ -103,6 +107,7 @@ function App() {
             {myWeather ? (
               <div>
                 <h3>Today's Weather</h3>
+                <img src={ myWeather.urlToImage} />
                 <p>Temperature: {myWeather.temperature}°C</p>
                 <p>Windspeed: {myWeather.windspeed} km/h</p>
               </div>
